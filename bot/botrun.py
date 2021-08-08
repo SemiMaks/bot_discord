@@ -1,4 +1,4 @@
-import discord
+import string
 import os, sqlite3
 from discord.ext import commands
 
@@ -20,8 +20,25 @@ async def on_ready():
 async def test(ctx):
     await ctx.send('туточки я')
 
+@bot.event
+async def on_message(message):
+    # if 'дела' in message.content.lower():
+    #     await message.channel.send('норм')
+    if {i.lower().translate(str.maketrans('','',string.punctuation)) for i in message.content.split(' ')}\
+            .intersection() != set():
+        await message.channel.send('получи бан!')
 @bot.command()
-async def info(ctx, *, arg):
-    await ctx.send(arg)
+# async def info(ctx, *, arg):
+# захват всего текста после !info
+async def info(ctx, arg=None):
+    author = ctx.message.author
+    if arg == None:
+        await ctx.send(f'{author.mention} Введите:\n!info all\n!info pati')
+    elif arg == 'all':
+        await ctx.send(f'{author.mention} Я Ботан и слежу за порядком в чате. 3-е предупреждение за мат ведёт к бану!')
+    elif arg == 'pati':
+        await ctx.send(f'{author.mention} !test - Бот онлайн?\n!статус - мои предупреждения')
+    else:
+        await ctx.send(f'{author.mention} такой команды нет...')
 
 bot.run(os.getenv('TOKEN'))
