@@ -9,7 +9,7 @@ call %~dp0\venv\Scripts\activate
 
 cd %~dp0bot\
 
-set TOKEN=ODczOTY1NjAzODEwMDc4Nzkw.YRAF5Q.7_2J4sibUIuyViSNYnmcJ1HhUl8
+set TOKEN=токен вставить свой
 
 python botrun.py
 
