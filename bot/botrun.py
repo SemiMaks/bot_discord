@@ -1,8 +1,13 @@
+import discord
+import json
 import string
-import os, sqlite3
+import os
+import sqlite3
 from discord.ext import commands
 
 bot = commands.Bot(command_prefix='!')
+
+
 # bot = commands.Bot(command_prefix='!', intents=discord.Intents.all())
 
 
@@ -16,17 +21,12 @@ async def on_ready():
     if base:
         print('DataBase connected...OK')
 
+
 @bot.command()
 async def test(ctx):
     await ctx.send('туточки я')
 
-@bot.event
-async def on_message(message):
-    # if 'дела' in message.content.lower():
-    #     await message.channel.send('норм')
-    if {i.lower().translate(str.maketrans('','',string.punctuation)) for i in message.content.split(' ')}\
-            .intersection() != set():
-        await message.channel.send('получи бан!')
+
 @bot.command()
 # async def info(ctx, *, arg):
 # захват всего текста после !info
@@ -40,5 +40,15 @@ async def info(ctx, arg=None):
         await ctx.send(f'{author.mention} !test - Бот онлайн?\n!статус - мои предупреждения')
     else:
         await ctx.send(f'{author.mention} такой команды нет...')
+
+
+@bot.event
+async def on_message(message):
+    # if 'дела' in message.content.lower():
+    #     await message.channel.send('норм')
+    if {i.lower().translate(str.maketrans('', '', string.punctuation)) for i in message.content.split(' ')}.intersection(set(json.load(open('cenz.json')))) != set():
+        await message.channel.send(f'{message.author.mention}, уууууу.....держи бан!')
+        await message.delete()
+
 
 bot.run(os.getenv('TOKEN'))
