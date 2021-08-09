@@ -5,10 +5,10 @@ import os
 import sqlite3
 from discord.ext import commands
 
-bot = commands.Bot(command_prefix='!')
+# bot = commands.Bot(command_prefix='!')
 
 
-# bot = commands.Bot(command_prefix='!', intents=discord.Intents.all())
+bot = commands.Bot(command_prefix='!', intents=discord.Intents.all())
 
 
 @bot.event
@@ -42,13 +42,13 @@ async def info(ctx, arg=None):
         await ctx.send(f'{author.mention} такой команды нет...')
 
 
-@bot.event
-async def on_message(message):
-    # if 'дела' in message.content.lower():
-    #     await message.channel.send('норм')
-    if {i.lower().translate(str.maketrans('', '', string.punctuation)) for i in message.content.split(' ')}.intersection(set(json.load(open('cenz.json')))) != set():
-        await message.channel.send(f'{message.author.mention}, уууууу.....держи бан!')
-        await message.delete()
+# @bot.event
+# async def on_message(message):
+#     if 'дела' in message.content.lower():
+#         await message.channel.send('норм')
+#     # if {i.lower().translate(str.maketrans('', '', string.punctuation)) for i in message.content.split(' ')}.intersection(set(json.load(open('cenz.json')))) != set():
+#     #     await message.channel.send(f'{message.author.mention}, уууууу.....держи бан!')
+#     #     await message.delete()
 
 
 bot.run(os.getenv('TOKEN'))
